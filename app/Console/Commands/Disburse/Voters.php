@@ -14,7 +14,7 @@ class Voters extends Command
      *
      * @var string
      */
-    protected $signature = 'ark:disburse:voters';
+    protected $signature = 'ark:disburse:voters {--banned}';
 
     /**
      * Execute the console command.
@@ -23,7 +23,9 @@ class Voters extends Command
      */
     public function handle()
     {
-        Wallet::public()->get()->each(function ($wallet) {
+        $wallets = $this->option('banned') ? Wallet::query() : Wallet::public();
+
+        $wallets->get()->each(function ($wallet) {
             if ($wallet->shouldBePaid()) {
                 $this->line("Disbursing Wallet: <info>{$wallet->address}</info>");
 
