@@ -69,9 +69,19 @@ class Wallet extends Model
      */
     public function scopePublic(Builder $query): Builder
     {
-        return $query
-            ->notBanned()
-            ->whereNotIn('address', config('delegate.blacklist'));
+        return $query->notBanned()->notBlacklisted();
+    }
+
+    /**
+     * Scope a query to only include non-blacklisted wallets.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeNotBlacklisted(Builder $query): Builder
+    {
+        return $query->whereNotIn('address', config('delegate.blacklist'));
     }
 
     /**

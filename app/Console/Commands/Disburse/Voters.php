@@ -23,7 +23,7 @@ class Voters extends Command
      */
     public function handle()
     {
-        $wallets = $this->option('banned') ? Wallet::query() : Wallet::public();
+        $wallets = $this->option('banned') ? Wallet::notBlacklisted() : Wallet::public();
 
         $wallets->get()->each(function ($wallet) {
             if ($wallet->shouldBePaid()) {
