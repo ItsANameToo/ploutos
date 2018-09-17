@@ -48,7 +48,7 @@ class ShowEarnings extends Command
                 'address'   => config('delegate.personal.address'),
                 'balance'   => 0,
                 'earnings'  => cache('delegate.earnings') / ARKTOSHI,
-                'banned_at' => 'No'
+                'banned_at' => 'No',
             ]);
         }
 
