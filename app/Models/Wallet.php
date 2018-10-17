@@ -99,7 +99,7 @@ class Wallet extends Model
 
         $earnings = $this->earnings;
 
-        if (!config('delegate.feeCoverage')) {
+        if (!config('delegate.fees.cover')) {
             $earnings -= 0.1 * ARKTOSHI;
         }
 
