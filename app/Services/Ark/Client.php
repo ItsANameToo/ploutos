@@ -4,7 +4,6 @@ namespace App\Services\Ark;
 
 use GrahamCampbell\GuzzleFactory\GuzzleFactory;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
 
 class Client
 {
