@@ -34,7 +34,7 @@ class Client
      */
     public function wallet(string $address): array
     {
-        return $this->get('api/accounts', compact('address'))['account'];
+        return $this->get('wallets/'.$address)['data'];
     }
 
     /**
@@ -46,7 +46,7 @@ class Client
      */
     public function transaction(string $id): array
     {
-        return $this->get('api/transactions/get', compact('id'));
+        return $this->get('transactions/'.$id)['data'];
     }
 
     /**
@@ -56,9 +56,7 @@ class Client
      */
     public function voters(): array
     {
-        return $this->get('api/delegates/voters', [
-            'publicKey' => config('delegate.publicKey'),
-        ])['accounts'];
+        return $this->get('delegates/'.config('delegate.username').'/voters')['data'];
     }
 
     /**
@@ -68,9 +66,7 @@ class Client
      */
     public function delegate(): array
     {
-        return $this->get('api/delegates/get', [
-            'username' => config('delegate.username'),
-        ])['delegate'];
+        return $this->get('delegates/'.config('delegate.username'))['data'];
     }
 
     /**
@@ -80,17 +76,13 @@ class Client
      */
     public function peers(): Collection
     {
-        $peers = $this->get('api/peers')['peers'];
-        $peers = collect($peers)->sortByDesc('height')->sortBy('delay');
+        $peers = $this->get('peers')['data'];
+        $peers = collect($peers)->sortByDesc('height')->sortBy('latency');
 
         return $peers->filter(function ($peer) {
-            return in_array(array_get($peer, 'version', '0.0.0'), [
-                '1.0.3', '1.1.0',
-            ], true);
-        })->filter(function ($peer) {
-            return array_get($peer, 'delay', 1000) < 500;
+            return array_get($peer, 'latency', 1000) <= 300;
         })->reject(function ($peer) {
-            return 'OK' !== array_get($peer, 'status', 'UNKNOWN');
+            return 200 !== array_get($peer, 'status', 500);
         });
     }
 
@@ -102,17 +94,9 @@ class Client
      */
     public function broadcast(string $uri, array $transaction): void
     {
-        $response = $this->post("{$uri}/peer/transactions", [
+        return $this->post('transactions', [
             'transactions' => [$transaction],
         ]);
-
-        if (empty($response['transactionIds'])) {
-            Log::emergency($response['message'], [
-                'transaction' => json_encode($transaction),
-            ]);
-        } else {
-            Log::info('Broadcasted '.$response['transactionIds'][0]);
-        }
     }
 
     /**
@@ -140,13 +124,7 @@ class Client
      */
     public function post(string $path, array $json): array
     {
-        $response = $this->client->post($path, compact('json') + [
-            'headers' => [
-                'nethash' => '6e84d08bd299ed97c212c886c98a57e36545c8f5d645ca7eeae63a8bd62d8988',
-                'version' => '1.1.0',
-                'port'    => 1,
-            ],
-        ]);
+        $response = $this->client->post($path, compact('json'));
 
         return json_decode($response->getBody(), true);
     }

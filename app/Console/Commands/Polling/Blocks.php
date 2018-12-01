@@ -57,11 +57,11 @@ class Blocks extends Command
 
     private function getBlocks(int $page): array
     {
-        return $this->client->get('api/blocks', [
+        return $this->client->get('blocks', [
             'generatorPublicKey' => config('delegate.publicKey'),
             'offset'             => 100 * $page,
             'limit'              => 100,
             'orderBy'            => 'height:desc',
-        ])['blocks'];
+        ])['data'];
     }
 }

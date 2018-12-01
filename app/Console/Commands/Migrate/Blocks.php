@@ -69,22 +69,22 @@ class Blocks extends Command
 
     private function getPages(): int
     {
-        $count = $this->client->get('api/blocks', [
+        $count = $this->client->get('blocks', [
             'generatorPublicKey' => config('delegate.publicKey'),
             'limit'              => 1,
-        ])['count'];
+        ])['meta']['totalCount'];
 
         return ceil($count / 100);
     }
 
     private function getBlocks(int $page): array
     {
-        return $this->client->get('api/blocks', [
+        return $this->client->get('blocks', [
             'generatorPublicKey' => config('delegate.publicKey'),
             'offset'             => 100 * $page,
             'limit'              => 100,
             'orderBy'            => 'height:desc',
-        ])['blocks'];
+        ])['data'];
     }
 
     private function shouldBeProcessed(Block $block): bool
