@@ -92,7 +92,7 @@ class Client
      * @param string $uri
      * @param array  $transaction
      */
-    public function broadcast(string $uri, array $transaction): void
+    public function broadcast(string $uri, array $transaction): array
     {
         return $this->post('transactions', [
             'transactions' => [$transaction],
