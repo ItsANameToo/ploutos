@@ -34,7 +34,7 @@ class Blocks extends Command
             $blocks = $this->getBlocks($i);
 
             foreach ($blocks as $block) {
-                if ($block['generatorPublicKey'] !== config('delegate.publicKey')) {
+                if ($block['generator']['publicKey'] !== config('delegate.publicKey')) {
                     continue;
                 }
 
@@ -49,10 +49,10 @@ class Blocks extends Command
                     $block = Block::create([
                         'block_id'     => $block['id'],
                         'height'       => $block['height'],
-                        'reward'       => $block['reward'],
-                        'fee'          => $block['totalFee'],
-                        'forged_at'    => humanize_epoch($block['timestamp']),
-                        'processed_at' => humanize_epoch($block['timestamp']),
+                        'reward'       => $block['forged']['reward'],
+                        'fee'          => $block['forged']['fee'],
+                        'forged_at'    => humanize_epoch($block['timestamp']['epoch']),
+                        'processed_at' => humanize_epoch($block['timestamp']['epoch']),
                     ]);
 
                     if ($this->shouldBeProcessed($block)) {

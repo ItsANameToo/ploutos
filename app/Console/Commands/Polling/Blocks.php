@@ -44,9 +44,9 @@ class Blocks extends Command
                     $block = Block::create([
                         'block_id'  => $block['id'],
                         'height'    => $block['height'],
-                        'fee'       => $block['totalFee'],
-                        'reward'    => $block['reward'],
-                        'forged_at' => humanize_epoch($block['timestamp']),
+                        'fee'       => $block['forged']['fee'],
+                        'reward'    => $block['forged']['reward'],
+                        'forged_at' => humanize_epoch($block['timestamp']['epoch']),
                     ]);
 
                     ProcessBlock::dispatch($block)->onQueue('blocks');
