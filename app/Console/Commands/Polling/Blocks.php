@@ -32,7 +32,7 @@ class Blocks extends Command
             $blocks = $this->getBlocks($i);
 
             foreach ($blocks as $block) {
-                if ($block['generatorPublicKey'] !== config('delegate.publicKey')) {
+                if ($block['generator']['publicKey'] !== config('delegate.publicKey')) {
                     continue;
                 }
 
