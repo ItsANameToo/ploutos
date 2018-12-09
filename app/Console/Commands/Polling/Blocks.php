@@ -32,7 +32,7 @@ class Blocks extends Command
             $blocks = $this->getBlocks($i);
 
             foreach ($blocks as $block) {
-                if ($block['generatorPublicKey'] !== config('delegate.publicKey')) {
+                if ($block['generator']['publicKey'] !== config('delegate.publicKey')) {
                     continue;
                 }
 
@@ -44,9 +44,9 @@ class Blocks extends Command
                     $block = Block::create([
                         'block_id'  => $block['id'],
                         'height'    => $block['height'],
-                        'fee'       => $block['totalFee'],
-                        'reward'    => $block['reward'],
-                        'forged_at' => humanize_epoch($block['timestamp']),
+                        'fee'       => $block['forged']['fee'],
+                        'reward'    => $block['forged']['reward'],
+                        'forged_at' => humanize_epoch($block['timestamp']['epoch']),
                     ]);
 
                     ProcessBlock::dispatch($block)->onQueue('blocks');
@@ -57,11 +57,11 @@ class Blocks extends Command
 
     private function getBlocks(int $page): array
     {
-        return $this->client->get('api/blocks', [
+        return $this->client->get('blocks', [
             'generatorPublicKey' => config('delegate.publicKey'),
             'offset'             => 100 * $page,
             'limit'              => 100,
             'orderBy'            => 'height:desc',
-        ])['blocks'];
+        ])['data'];
     }
 }

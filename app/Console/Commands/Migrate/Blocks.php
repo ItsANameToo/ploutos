@@ -34,7 +34,7 @@ class Blocks extends Command
             $blocks = $this->getBlocks($i);
 
             foreach ($blocks as $block) {
-                if ($block['generatorPublicKey'] !== config('delegate.publicKey')) {
+                if ($block['generator']['publicKey'] !== config('delegate.publicKey')) {
                     continue;
                 }
 
@@ -49,10 +49,10 @@ class Blocks extends Command
                     $block = Block::create([
                         'block_id'     => $block['id'],
                         'height'       => $block['height'],
-                        'reward'       => $block['reward'],
-                        'fee'          => $block['totalFee'],
-                        'forged_at'    => humanize_epoch($block['timestamp']),
-                        'processed_at' => humanize_epoch($block['timestamp']),
+                        'reward'       => $block['forged']['reward'],
+                        'fee'          => $block['forged']['fee'],
+                        'forged_at'    => humanize_epoch($block['timestamp']['epoch']),
+                        'processed_at' => humanize_epoch($block['timestamp']['epoch']),
                     ]);
 
                     if ($this->shouldBeProcessed($block)) {
@@ -69,22 +69,22 @@ class Blocks extends Command
 
     private function getPages(): int
     {
-        $count = $this->client->get('api/blocks', [
+        $count = $this->client->get('blocks', [
             'generatorPublicKey' => config('delegate.publicKey'),
             'limit'              => 1,
-        ])['count'];
+        ])['meta']['totalCount'];
 
         return ceil($count / 100);
     }
 
     private function getBlocks(int $page): array
     {
-        return $this->client->get('api/blocks', [
+        return $this->client->get('blocks', [
             'generatorPublicKey' => config('delegate.publicKey'),
             'offset'             => 100 * $page,
             'limit'              => 100,
             'orderBy'            => 'height:desc',
-        ])['blocks'];
+        ])['data'];
     }
 
     private function shouldBeProcessed(Block $block): bool

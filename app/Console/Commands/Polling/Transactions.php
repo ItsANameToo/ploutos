@@ -81,11 +81,11 @@ class Transactions extends Command
 
     private function getTransactions(int $page): array
     {
-        return $this->client->get('api/transactions', [
+        return $this->client->get('transactions', [
             'senderId' => config('delegate.address'),
             'offset'   => 50 * $page,
             'limit'    => 50,
             'orderBy'  => 'timestamp:desc',
-        ])['transactions'];
+        ])['data'];
     }
 }
