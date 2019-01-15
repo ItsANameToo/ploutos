@@ -39,7 +39,7 @@ class ShowEarnings extends Command
                     'balance'  => $wallet->balance / ARKTOSHI,
                     'earnings' => $wallet->earnings / ARKTOSHI,
                     'banned'   => $wallet->banned_at ? 'Yes' : 'No',
-                    'percentage' => $wallet->payout_perc !== null ? $wallet->payout_perc : config('delegate.sharePercentage')
+                    'percentage' => is_null($wallet->payout_perc) ? config('delegate.sharePercentage') : $wallet->payout_perc
                 ];
             });
 
