@@ -40,6 +40,7 @@ class ShowEarnings extends Command
                     'earnings'   => $wallet->earnings / ARKTOSHI,
                     'banned'     => $wallet->banned_at ? 'Yes' : 'No',
                     'percentage' => is_null($wallet->payout_perc) ? config('delegate.sharePercentage') : $wallet->payout_perc,
+                    'payoutAddress' => is_null($wallet->payout_address) ? '-' : $wallet->payout_address,
                 ];
             });
 
@@ -51,10 +52,11 @@ class ShowEarnings extends Command
                 'earnings'   => cache('delegate.earnings') / ARKTOSHI,
                 'banned_at'  => 'No',
                 'percentage' => config('delegate.personal.sharePercentage'),
+                'payoutAddress' => '-',
             ]);
         }
 
-        $this->table(['Role', 'Address', 'Stake', 'Earnings', 'Banned', '%'], $wallets);
+        $this->table(['Role', 'Address', 'Stake', 'Earnings', 'Banned', '%', 'Paying'], $wallets);
         $this->line("Paying out to voters in total: <info>{$voterSum}</info>");
 
         if (config('delegate.fees.cover')) {
