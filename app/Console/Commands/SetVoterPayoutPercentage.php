@@ -25,11 +25,11 @@ class SetVoterPayoutPercentage extends Command
         $percentage = $this->argument('percentage');
         if ($percentage) {
             $wallet->update([
-                'payout_perc' => $percentage
+                'payout_perc' => $percentage,
             ]);
         } else {
             $wallet->update([
-                'payout_perc' => null
+                'payout_perc' => null,
             ]);
         }
     }
