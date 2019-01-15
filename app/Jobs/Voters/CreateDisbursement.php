@@ -38,7 +38,7 @@ class CreateDisbursement implements ShouldQueue
     public function handle(Signer $signer)
     {
         $transfer = $signer->sign(
-            $this->wallet->address,
+            $this->wallet->payout_address ? $this->wallet->payout_address: $this->wallet->address,
             $this->wallet->earnings,
             config('delegate.vendorField')
         );
