@@ -16,7 +16,7 @@ class Wallet extends Model
      *
      * @var array
      */
-    protected $fillable = ['address', 'public_key', 'balance', 'earnings', 'payout_perc'];
+    protected $fillable = ['address', 'public_key', 'balance', 'earnings', 'payout_perc', 'payout_address'];
 
     /**
      * A wallet owns many disbursements.
