@@ -29,7 +29,7 @@ class SetPayoutAddress extends Command
             ]);
         } else {
             $wallet->update([
-                'payout_address' => 'asdf',
+                'payout_address' => null,
             ]);
         }
     }
