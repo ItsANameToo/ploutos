@@ -25,7 +25,7 @@ class ShowEarnings extends Command
         $payoutFees = 0;
 
         $wallets = $this->option('banned') ? Wallet::notBlacklisted() : Wallet::public();
-        $wallets = $wallets->get(['address', 'balance', 'earnings', 'banned_at', 'payout_perc'])
+        $wallets = $wallets->get(['address', 'balance', 'earnings', 'banned_at', 'payout_perc', 'payout_address'])
             ->map(function ($wallet) use (&$voterSum, &$payoutFees) {
                 $voterSum += $wallet->earnings / ARKTOSHI;
 
