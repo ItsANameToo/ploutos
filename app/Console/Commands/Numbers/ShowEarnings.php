@@ -34,24 +34,24 @@ class ShowEarnings extends Command
                 }
 
                 return [
-                    'role'       => 'Voter',
-                    'address'    => $wallet->address,
-                    'balance'    => $wallet->balance / ARKTOSHI,
-                    'earnings'   => $wallet->earnings / ARKTOSHI,
-                    'banned'     => $wallet->banned_at ? 'Yes' : 'No',
-                    'percentage' => is_null($wallet->payout_perc) ? config('delegate.sharePercentage') : $wallet->payout_perc,
+                    'role'          => 'Voter',
+                    'address'       => $wallet->address,
+                    'balance'       => $wallet->balance / ARKTOSHI,
+                    'earnings'      => $wallet->earnings / ARKTOSHI,
+                    'banned'        => $wallet->banned_at ? 'Yes' : 'No',
+                    'percentage'    => is_null($wallet->payout_perc) ? config('delegate.sharePercentage') : $wallet->payout_perc,
                     'payoutAddress' => is_null($wallet->payout_address) ? '-' : $wallet->payout_address,
                 ];
             });
 
         if (config('delegate.personal.address')) {
             $wallets->push([
-                'role'       => 'Delegate',
-                'address'    => config('delegate.personal.address'),
-                'balance'    => 0,
-                'earnings'   => cache('delegate.earnings') / ARKTOSHI,
-                'banned_at'  => 'No',
-                'percentage' => config('delegate.personal.sharePercentage'),
+                'role'          => 'Delegate',
+                'address'       => config('delegate.personal.address'),
+                'balance'       => 0,
+                'earnings'      => cache('delegate.earnings') / ARKTOSHI,
+                'banned_at'     => 'No',
+                'percentage'    => config('delegate.personal.sharePercentage'),
                 'payoutAddress' => '-',
             ]);
         }
