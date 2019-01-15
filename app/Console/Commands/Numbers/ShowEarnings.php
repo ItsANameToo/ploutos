@@ -25,7 +25,7 @@ class ShowEarnings extends Command
         $payoutFees = 0;
 
         $wallets = $this->option('banned') ? Wallet::notBlacklisted() : Wallet::public();
-        $wallets = $wallets->get(['address', 'balance', 'earnings', 'banned_at'])
+        $wallets = $wallets->get(['address', 'balance', 'earnings', 'banned_at', 'payout_perc'])
             ->map(function ($wallet) use (&$voterSum, &$payoutFees) {
                 $voterSum += $wallet->earnings / ARKTOSHI;
 
@@ -39,6 +39,7 @@ class ShowEarnings extends Command
                     'balance'  => $wallet->balance / ARKTOSHI,
                     'earnings' => $wallet->earnings / ARKTOSHI,
                     'banned'   => $wallet->banned_at ? 'Yes' : 'No',
+                    'percentage' => $wallet->payout_perc !== null ? $wallet->payout_perc : config('delegate.sharePercentage')
                 ];
             });
 
@@ -49,10 +50,11 @@ class ShowEarnings extends Command
                 'balance'   => 0,
                 'earnings'  => cache('delegate.earnings') / ARKTOSHI,
                 'banned_at' => 'No',
+                'percentage' => config('delegate.personal.sharePercentage')
             ]);
         }
 
-        $this->table(['Role', 'Address', 'Stake', 'Earnings', 'Banned'], $wallets);
+        $this->table(['Role', 'Address', 'Stake', 'Earnings', 'Banned', '%'], $wallets);
         $this->line("Paying out to voters in total: <info>{$voterSum}</info>");
 
         if (config('delegate.fees.cover')) {
