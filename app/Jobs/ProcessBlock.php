@@ -37,6 +37,7 @@ class ProcessBlock implements ShouldQueue
     {
         Wallet::public()->each(function ($wallet) use ($calculator) {
             $calculator->setReward($this->block->total);
+            is_null($wallet->payout_perc) ? $calculator->setProfitShare(config('delegate.sharePercentage')) : $calculator->setProfitShare($wallet->payout_perc);
 
             $earnings = $calculator->perBlock($wallet->stake)->toInteger();
 
