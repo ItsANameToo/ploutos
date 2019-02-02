@@ -18,7 +18,7 @@ class Signer
     public function sign(string $recipient, int $amount, string $purpose): Transfer
     {
         return Transfer::new()
-            ->recipient($recipient, $amount, $purpose)
+            ->recipient($recipient)
             ->amount($amount)
             ->vendorField($purpose)
             ->sign(decrypt(config('delegate.passphrase')))
