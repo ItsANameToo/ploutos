@@ -36,10 +36,12 @@ class BroadcastDisbursement implements ShouldQueue
      */
     public function handle(Broadcaster $broadcaster)
     {
-        $transaction = $this->disbursement->transaction;
+        if (config('delegate.mode') !== 'dummy') {
+            $transaction = $this->disbursement->transaction;
 
-        config('delegate.broadcastType') === 'spread'
-            ? $broadcaster->spread($transaction)
-            : $broadcaster->broadcast($transaction);
+            config('delegate.broadcastType') === 'spread'
+                ? $broadcaster->spread($transaction)
+                : $broadcaster->broadcast($transaction);
+        }
     }
 }

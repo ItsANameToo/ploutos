@@ -263,4 +263,16 @@ return [
 
     'broadcastType' => env('ARK_DELEGATE_BROADCAST_TYPE', 'default'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Program mode
+    |--------------------------------------------------------------------------
+    |
+    | Here you may specify the mode in which the program runs
+    | Valid options are production and dummy
+    |
+    */
+
+    'mode' => env('ARK_DELEGATE_MODE', 'production'),
+
 ];

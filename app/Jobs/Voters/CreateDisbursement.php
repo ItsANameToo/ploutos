@@ -37,25 +37,28 @@ class CreateDisbursement implements ShouldQueue
      */
     public function handle(Signer $signer)
     {
-        $transfer = $signer->sign(
-            $this->wallet->payout_address ? $this->wallet->payout_address : $this->wallet->address,
-            $this->wallet->earnings,
-            config('delegate.vendorField')
-        );
+        if (config('delegate.mode') !== 'dummy') {
+            $transfer = $signer->sign(
+                $this->wallet->payout_address ? $this->wallet->payout_address : $this->wallet->address,
+                $this->wallet->earnings,
+                config('delegate.vendorField')
+            );
 
-        if (!$transfer->verify()) {
-            throw new RuntimeException('Invalid transaction: '.json_encode($transfer));
+            if (!$transfer->verify()) {
+                throw new RuntimeException('Invalid transaction: '.json_encode($transfer));
+            }
+
+
+            $transfer = transform_transfer($transfer->toArray());
+
+            $this->wallet->disbursements()->create([
+                'transaction_id' => $transfer['id'],
+                'amount'         => $transfer['amount'],
+                'purpose'        => $transfer['vendorField'],
+                'signed_at'      => humanize_epoch($transfer['timestamp']),
+                'transaction'    => $transfer,
+            ]);
         }
-
-        $transfer = transform_transfer($transfer->toArray());
-
-        $this->wallet->disbursements()->create([
-            'transaction_id' => $transfer['id'],
-            'amount'         => $transfer['amount'],
-            'purpose'        => $transfer['vendorField'],
-            'signed_at'      => humanize_epoch($transfer['timestamp']),
-            'transaction'    => $transfer,
-        ]);
 
         $this->wallet->update(['earnings' => 0]);
     }

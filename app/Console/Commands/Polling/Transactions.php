@@ -39,16 +39,16 @@ class Transactions extends Command
                 // the next few lines to avoid indexing transactions that have
                 // not been send to your voters.
 
-                // if ('Delegate payout' === $transaction['vendorField']) {
-                //     continue;
-                // }
+                if ('Delegate payout' === $transaction['vendorField']) {
+                    continue;
+                }
 
-                // $containsOldPurpose = str_contains($transaction['vendorField'], 'payout to height');
-                // $containsNewPurpose = $transaction['vendorField'] === config('delegate.vendorField');
+                $containsOldPurpose = str_contains($transaction['vendorField'], 'payout to height');
+                $containsNewPurpose = $transaction['vendorField'] === config('delegate.vendorField');
 
-                // if (! $containsOldPurpose && ! $containsNewPurpose) {
-                //     continue;
-                // }
+                if (! $containsOldPurpose && ! $containsNewPurpose) {
+                    continue;
+                }
 
                 $this->line('Polling Transaction: <info>'.$transaction['id'].'</info>');
 
@@ -56,14 +56,14 @@ class Transactions extends Command
                     'transaction_id' => $transaction['id'],
                     'amount'         => $transaction['amount'],
                     'purpose'        => $transaction['vendorField'],
-                    'signed_at'      => humanize_epoch($transaction['timestamp']),
+                    'signed_at'      => humanize_epoch($transaction['timestamp']['epoch']),
                     'transaction'    => transform_transfer($transaction),
                 ];
 
                 try {
-                    $wallet = Wallet::findByAddress($transaction['recipientId']);
+                    $wallet = Wallet::findByAddress($transaction['recipient']);
                 } catch (\Exception $e) {
-                    $response = $this->client->wallet($transaction['recipientId']);
+                    $response = $this->client->wallet($transaction['recipient']);
 
                     $wallet = Wallet::firstOrCreate([
                         'address'    => $response['address'],

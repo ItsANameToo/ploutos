@@ -30,12 +30,14 @@ class SendAmount extends Command
             $smartbridge
         );
 
-        if ($transfer->verify()) {
-            config('delegate.broadcastType') === 'spread'
-            ? $broadcaster->spread($transfer->toArray())
-            : $broadcaster->broadcast($transfer->toArray());
-        } else {
-            $this->error('The signed transaction could not be verified.');
+        if (config('delegate.mode') !== 'dummy') {
+            if ($transfer->verify()) {
+                config('delegate.broadcastType') === 'spread'
+                ? $broadcaster->spread($transfer->toArray())
+                : $broadcaster->broadcast($transfer->toArray());
+            } else {
+                $this->error('The signed transaction could not be verified.');
+            }
         }
     }
 }
