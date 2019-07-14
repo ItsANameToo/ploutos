@@ -48,7 +48,6 @@ class CreateDisbursement implements ShouldQueue
                 throw new RuntimeException('Invalid transaction: '.json_encode($transfer));
             }
 
-
             $transfer = transform_transfer($transfer->toArray());
 
             $this->wallet->disbursements()->create([

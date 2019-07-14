@@ -46,7 +46,7 @@ class Transactions extends Command
                 $containsOldPurpose = str_contains($transaction['vendorField'], 'payout to height');
                 $containsNewPurpose = $transaction['vendorField'] === config('delegate.vendorField');
 
-                if (! $containsOldPurpose && ! $containsNewPurpose) {
+                if (!$containsOldPurpose && !$containsNewPurpose) {
                     continue;
                 }
 
