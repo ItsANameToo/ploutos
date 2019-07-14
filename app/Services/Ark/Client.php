@@ -20,7 +20,7 @@ class Client
     public function __construct()
     {
         $this->client = GuzzleFactory::make([
-            'base_uri' => config('delegate.host')
+            'base_uri' => config('delegate.host'),
         ]);
     }
 
