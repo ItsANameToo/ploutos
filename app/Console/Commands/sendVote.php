@@ -6,7 +6,7 @@ use App\Services\Ark\Broadcaster;
 use App\Services\Ark\Signer;
 use Illuminate\Console\Command;
 
-class SendVote extends Command
+class sendVote extends Command
 {
     /**
      * The name and signature of the console command.
@@ -26,7 +26,7 @@ class SendVote extends Command
         $vote = $signer->signVote(
             $this->argument('delegate')
         );
-        echo($vote);
+        echo $vote;
 
         if (config('delegate.mode') !== 'dummy') {
             if ($vote->verify()) {
