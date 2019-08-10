@@ -26,7 +26,7 @@ class SendUnvote extends Command
         $vote = $signer->signUnvote(
             $this->argument('delegate')
         );
-        echo($vote);
+        echo $vote;
 
         if (config('delegate.mode') !== 'dummy') {
             if ($vote->verify()) {

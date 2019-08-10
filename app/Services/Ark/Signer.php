@@ -29,7 +29,7 @@ class Signer
     public function signVote(string $delegate): Vote
     {
         return Vote::new()
-            ->votes(['+' . $delegate])
+            ->votes(['+'.$delegate])
             ->sign(decrypt(config('delegate.passphrase')))
             ->secondSign(decrypt(config('delegate.secondPassphrase')));
     }
@@ -37,7 +37,7 @@ class Signer
     public function signUnvote(string $delegate): Vote
     {
         return Vote::new()
-            ->votes(['-' . $delegate])
+            ->votes(['-'.$delegate])
             ->sign(decrypt(config('delegate.passphrase')))
             ->secondSign(decrypt(config('delegate.secondPassphrase')));
     }
