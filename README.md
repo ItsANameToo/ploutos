@@ -56,14 +56,14 @@ php artisan ark:earnings
 |----------|-------------|---------|---------|
 | ARK_DELEGATE_HOST | The host used to fetch API data from | `"http:1.1.1.1:4003/api/"` | none |
 | ARK_DELEGATE_USERNAME | The username of your delegate | `ItsANameToo` | none |
-| ARK_DELEGATE_ADDRESS | The address of your delegate | `DBk4cPYpqp7EBcvkstVDpyX7RQJNHxpMg8` | none |
-| ARK_DELEGATE_PUBLIC_KEY | The public key of your delegate | `0236d5232cdbd1e7ab87fad10ebe689c4557bc9d0c408b6773be964c837231d5f0` | none |
+| ARK_DELEGATE_ADDRESS | The address of your delegate | `DBk4cPY...NHxpMg8` | none |
+| ARK_DELEGATE_PUBLIC_KEY | The public key of your delegate | `0236d5232...837231d5f0` | none |
 | ARK_DELEGATE_VENDOR_FIELD | The vendor field message that voters will see | `"Voter Share"` | none |
 | ARK_DELEGATE_SHARE_PERCENTAGE | The share percentage (1-100) the voters get | `50` | `90` |
 | ARK_DELEGATE_THRESHOLD | A pending balance threshold above which payments occur to voters (in ARK) | `0.001` | `0.1` |
 | ARK_DELEGATE_PASSPHRASE | The passphrase of your delegate (encrypted) | `"laravel encrypted passphrase"` | none |
 | ARK_DELEGATE_SECOND_PASSPHRASE | The second passphrase of your delegate (encrypted) | `"laravel encrypted passphrase"` | none |
-| ARK_DELEGATE_PERSONAL_ADDRESS | The address where your delegate share should go | `DBk4cPYpqp7EBcvkstVDpyX7RQJNHxpMg8` | none |
+| ARK_DELEGATE_PERSONAL_ADDRESS | The address where your delegate share should go | `DBk4cPY...NHxpMg8` | none |
 | ARK_DELEGATE_PERSONAL_SHARE_PERCENTAGE | The share percentage you receive as delegate | `50` | none |
 | ARK_DELEGATE_PERSONAL_VENDOR_FIELD= | The vendor field message that your delegate payment will contain | `"Delegate share"` | none |
 | ARK_DELEGATE_FEE_COVER= | Whether you cover transaction fees for voters | `true` | `false` |
