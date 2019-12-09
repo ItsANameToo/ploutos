@@ -49,6 +49,16 @@ class Client
     }
 
     /**
+     * Get the nonce of the delegate wallet
+     *
+     * @return string
+     */
+    public function nonce(): string
+    {
+        return $this->get('wallets/'.config('delegate.address'))['data']['nonce'];
+    }
+
+    /**
      * Get voters for the configured delegate.
      *
      * @return array

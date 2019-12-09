@@ -5,6 +5,7 @@ namespace App\Console\Commands\Disburse;
 use App\Jobs\Voters\BroadcastDisbursement;
 use App\Jobs\Voters\CreateDisbursement;
 use App\Models\Wallet;
+use App\Services\Ark\Client;
 use Illuminate\Console\Command;
 
 class Voters extends Command
@@ -21,17 +22,21 @@ class Voters extends Command
      *
      * @return mixed
      */
-    public function handle()
+    public function handle(Client $client)
     {
         $wallets = $this->option('banned') ? Wallet::notBlacklisted() : Wallet::public();
 
-        $wallets->get()->each(function ($wallet) {
+        $nonce = $client->nonce() + 1;
+        $wallets->get()->each(function ($wallet) use (&$nonce) {
             if ($wallet->shouldBePaid()) {
                 $this->line("Disbursing Wallet: <info>{$wallet->address}</info>");
 
+                $this->line($nonce);
                 CreateDisbursement::withChain([
                     new BroadcastDisbursement($wallet),
-                ])->dispatch($wallet)->allOnQueue('disbursements');
+                ])->dispatch($wallet, $nonce)->allOnQueue('disbursements');
+
+                $nonce += 1;
             }
         });
     }

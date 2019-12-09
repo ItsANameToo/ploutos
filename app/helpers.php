@@ -50,8 +50,9 @@ function object_to_array(object $value): array
 function transform_transfer(array $value): array
 {
     return array_only($value, [
-        'type', 'amount', 'fee', 'recipientId', 'timestamp', 'vendorField',
-        'senderPublicKey', 'signature', 'signSignature', 'id',
+        'type', 'typeGroup', 'expiration', 'nonce', 'amount', 'fee',
+        'recipientId', 'vendorField', 'senderPublicKey', 'signature',
+        'signSignature', 'id', 'version', 'network',
     ]);
 }
 

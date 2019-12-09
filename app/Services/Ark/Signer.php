@@ -2,7 +2,7 @@
 
 namespace App\Services\Ark;
 
-use ArkEcosystem\Crypto\Transactions\Builder\Transfer;
+use ArkEcosystem\Crypto\Transactions\Builder\TransferBuilder;
 
 class Signer
 {
@@ -15,12 +15,13 @@ class Signer
      *
      * @return \ArkEcosystem\Crypto\Transactions\Builder\Transfer
      */
-    public function sign(string $recipient, int $amount, string $purpose): Transfer
+    public function sign(string $recipient, int $amount, int $nonce, string $purpose): TransferBuilder
     {
-        return Transfer::new()
+        return TransferBuilder::new()
             ->recipient($recipient)
             ->amount($amount)
             ->vendorField($purpose)
+            ->withNonce($nonce)
             ->sign(decrypt(config('delegate.passphrase')))
             ->secondSign(decrypt(config('delegate.secondPassphrase')));
     }

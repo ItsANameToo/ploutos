@@ -4,6 +4,7 @@ namespace App\Jobs\Voters;
 
 use App\Models\Wallet;
 use App\Services\Ark\Signer;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -23,11 +24,18 @@ class CreateDisbursement implements ShouldQueue
     public $wallet;
 
     /**
+     * The nonce for the transaction
+     *
+     */
+    public $nonce;
+
+    /**
      * Create a new job instance.
      */
-    public function __construct(Wallet $wallet)
+    public function __construct(Wallet $wallet, int $nonce)
     {
         $this->wallet = $wallet;
+        $this->nonce = $nonce;
     }
 
     /**
@@ -40,6 +48,7 @@ class CreateDisbursement implements ShouldQueue
         $transfer = $signer->sign(
             $this->wallet->payout_address ? $this->wallet->payout_address : $this->wallet->address,
             $this->wallet->earnings,
+            $this->nonce,
             config('delegate.vendorField')
         );
 
@@ -53,7 +62,7 @@ class CreateDisbursement implements ShouldQueue
             'transaction_id' => $transfer['id'],
             'amount'         => $transfer['amount'],
             'purpose'        => $transfer['vendorField'],
-            'signed_at'      => humanize_epoch($transfer['timestamp']),
+            'signed_at'      => Carbon::now(),
             'transaction'    => $transfer,
         ]);
 

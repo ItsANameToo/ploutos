@@ -4,6 +4,7 @@ namespace App\Console\Commands\Disburse;
 
 use App\Models\Disbursement;
 use App\Services\Ark\Broadcaster;
+use App\Services\Ark\Client;
 use App\Services\Ark\Signer;
 use ArkX\Calculus\BigNumber;
 use Illuminate\Console\Command;
@@ -26,9 +27,10 @@ class Developer extends Command
      *
      * @return mixed
      */
-    public function handle(Signer $signer, Broadcaster $broadcaster)
+    public function handle(Signer $signer, Broadcaster $broadcaster, Client $client)
     {
         $earnings = $this->earnings();
+        $nonce = $client->nonce() + 1;
 
         if (config('delegate.fees.cover') && config('delegate.fees.deduct')) {
             $earnings -= $this->fee();
@@ -41,6 +43,7 @@ class Developer extends Command
         $transfer = $signer->sign(
             config('delegate.personal.address'),
             $earnings,
+            $nonce,
             config('delegate.personal.vendorField')
         );
 
