@@ -49,7 +49,7 @@ class Client
     }
 
     /**
-     * Get the nonce of the delegate wallet
+     * Get the nonce of the delegate wallet.
      *
      * @return string
      */
