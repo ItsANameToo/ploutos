@@ -73,21 +73,22 @@ class CreateDisbursement implements ShouldQueue
             ? $broadcaster->spread($transfer)
             : $broadcaster->broadcast($transfer);
 
-        // TODO: create transaction table, save json in there for multipayment and delegate payouts
-        // TODO: make transaction column nullable
         // TODO: have latest disbursement command fetch the latest x transactions instead
         // TODO: make an expiration thingy so they aren't 0 by default
-        // TODO: still save disbursements but without the transaction, or make it link to the transaction and ditch the current tables (e.g. create migration for it)
 
-        // $this->wallet->disbursements()->create([
-        //     'transaction_id' => $transfer['id'],
-        //     'amount'         => $transfer['amount'],
-        //     'purpose'        => $transfer['vendorField'],
-        //     'signed_at'      => Carbon::now(),
-        //     'transaction'    => $transfer,
-        // ]);
+        foreach ($this->wallets as $wallet) {
+            $disbursement = $wallet->disbursements()->create([
+                'transaction_id' => $transfer['id'],
+                'amount'         => $wallet->earnings,
+                'purpose'        => "payout", //$transfer['vendorField'],
+                'signed_at'      => Carbon::now(),
+            ]);
 
-        foreach($this->wallets as $wallet) {
+            $disbursement->transaction()->create([
+                'transaction_id' => $transfer['id'],
+                'transaction' => $transfer,
+            ]);
+
             $wallet->update(['earnings' => 0]);
         }
     }

@@ -18,7 +18,6 @@ class CreateDisbursementsTable extends Migration
             $table->bigInteger('amount')->unsigned();
             $table->string('purpose');
             $table->datetime('signed_at');
-            $table->json('transaction');
             $table->timestamps();
         });
     }

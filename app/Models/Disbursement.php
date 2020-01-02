@@ -39,6 +39,16 @@ class Disbursement extends Model
     }
 
     /**
+     * A disbursement has a transactions.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function transaction(): BelongsTo
+    {
+        return $this->belongsTo(Transaction::class);
+    }
+
+    /**
      * Get a disbursement by the given transaction id.
      *
      * @return \App\Models\Disbursement
