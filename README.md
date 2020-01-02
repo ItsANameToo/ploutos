@@ -50,6 +50,14 @@ php artisan ark:migrate:blocks {height=0} {--skip}
 php artisan ark:earnings
 ```
 
+You need to make sure that the script runs in near real-time to properly fetch block information. The simplest way to do this is by setting a cronjob that calls the script every minute. Laravel itself has a `Kernel` file that further defines which commands will be triggered when the cronjob gets executed.
+
+An example to do this with `crontab -e` would be do add the following line to call the script every minute:
+
+```bash
+* * * * * cd ~/ploutos && php artisan schedule:run >> /dev/null 2>&1
+```
+
 ## Environment
 
 Note that all environment variables are prefixed with `ARK_DELEGATE_` but for the sake of saving space only the last part is included in the below table (they are already in the `.env.example` file anyway)
