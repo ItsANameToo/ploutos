@@ -41,16 +41,14 @@ class Voters extends Command
 
         // Split eligible wallets based on max payouts per transaction
         $walletsSplit = array_chunk($walletsToBePaid, config('delegate.multipaymentCount'));
-        foreach($walletsSplit as $walletList) {
+        foreach ($walletsSplit as $walletList) {
             CreateDisbursement::dispatch($walletList, $nonce)->allOnQueue('disbursements');
             $nonce += 1;
         }
-
 
         // withChain([
         //     new BroadcastDisbursement($wallet),
         // ])->
         // CreateDisbursement::dispatch($walletsToBePaid, $nonce)->allOnQueue('disbursements');
-
     }
 }

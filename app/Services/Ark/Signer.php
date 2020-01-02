@@ -2,8 +2,8 @@
 
 namespace App\Services\Ark;
 
-use ArkEcosystem\Crypto\Transactions\Builder\TransferBuilder;
 use ArkEcosystem\Crypto\Transactions\Builder\MultipaymentBuilder;
+use ArkEcosystem\Crypto\Transactions\Builder\TransferBuilder;
 
 class Signer
 {
@@ -24,9 +24,8 @@ class Signer
             ->vendorField($purpose)
             ->withNonce($nonce)
             ->sign(decrypt(config('delegate.passphrase')));
-            //->secondSign(decrypt(config('delegate.secondPassphrase')));
+        //->secondSign(decrypt(config('delegate.secondPassphrase')));
     }
-
 
     public function signMultipayment(array $wallets, int $nonce, string $purpose): MultipaymentBuilder
     {
@@ -34,7 +33,7 @@ class Signer
             ->vendorField($purpose)
             ->withNonce($nonce);
 
-        foreach($wallets as $wallet) {
+        foreach ($wallets as $wallet) {
             $multipayment->add(($wallet->payout_address ? $wallet->payout_address : $wallet->address), $wallet->earnings);
         }
 
