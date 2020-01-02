@@ -17,6 +17,8 @@ class CreateTransactionsTable extends Migration
             $table->string('transaction_id');
             $table->json('transaction');
             $table->timestamps();
+
+            $table->unique(array('transaction_id'));
         });
     }
 

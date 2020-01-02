@@ -3,6 +3,7 @@
 namespace App\Jobs\Voters;
 
 use App\Models\Wallet;
+use App\Models\Transaction;
 use App\Services\Ark\Broadcaster;
 use App\Services\Ark\Signer;
 use Carbon\Carbon;
@@ -68,24 +69,21 @@ class CreateDisbursement implements ShouldQueue
 
         $transfer = $transfer->toArray();
 
-        // TODO: move this to broadcaster and fetch tx from db?
         config('delegate.broadcastType') === 'spread'
             ? $broadcaster->spread($transfer)
             : $broadcaster->broadcast($transfer);
 
-        // TODO: have latest disbursement command fetch the latest x transactions instead
         // TODO: make an expiration thingy so they aren't 0 by default
 
         foreach ($this->wallets as $wallet) {
             $disbursement = $wallet->disbursements()->create([
                 'transaction_id' => $transfer['id'],
                 'amount'         => $wallet->earnings,
-                'purpose'        => "payout", //$transfer['vendorField'],
+                'purpose'        => $transfer['vendorField'],
                 'signed_at'      => Carbon::now(),
             ]);
 
-            $disbursement->transaction()->create([
-                'transaction_id' => $transfer['id'],
+            Transaction::updateOrCreate(['transaction_id' => $transfer['id']], [
                 'transaction' => $transfer,
             ]);
 

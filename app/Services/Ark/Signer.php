@@ -31,7 +31,7 @@ class Signer
     public function signMultipayment(array $wallets, int $nonce, string $purpose): MultipaymentBuilder
     {
         $multipayment = MultipaymentBuilder::new()
-            //->vendorField($purpose)
+            ->vendorField($purpose)
             ->withNonce($nonce);
 
         foreach($wallets as $wallet) {

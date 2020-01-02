@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Transaction extends Model
 {
@@ -19,17 +18,13 @@ class Transaction extends Model
      *
      * @var array
      */
-    protected $casts = ['transaction' => 'array'];
+    protected $casts = ['transaction' => 'array', 'transaction_id' => 'string'];
 
     /**
-     * A transaction can have multiple disbursements.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * Set custom primary key
      */
-    public function disbursement(): BelongsTo
-    {
-        return $this->hasMany(Disbursement::class);
-    }
+    public $primaryKey = 'transaction_id';
+    public $incrementing = false;
 
     /**
      * Get a transaction by the given transaction id.
