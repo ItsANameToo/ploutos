@@ -26,8 +26,7 @@ class CreateDisbursement implements ShouldQueue
     public $wallets;
 
     /**
-     * The nonce for the transaction
-     *
+     * The nonce for the transaction.
      */
     public $nonce;
 
