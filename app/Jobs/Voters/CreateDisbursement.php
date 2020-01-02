@@ -2,8 +2,8 @@
 
 namespace App\Jobs\Voters;
 
-use App\Models\Wallet;
 use App\Models\Transaction;
+use App\Models\Wallet;
 use App\Services\Ark\Broadcaster;
 use App\Services\Ark\Signer;
 use Carbon\Carbon;

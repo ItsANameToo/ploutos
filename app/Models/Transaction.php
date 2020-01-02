@@ -21,7 +21,7 @@ class Transaction extends Model
     protected $casts = ['transaction' => 'array', 'transaction_id' => 'string'];
 
     /**
-     * Set custom primary key
+     * Set custom primary key.
      */
     public $primaryKey = 'transaction_id';
     public $incrementing = false;
