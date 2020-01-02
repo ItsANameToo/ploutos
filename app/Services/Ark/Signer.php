@@ -2,7 +2,7 @@
 
 namespace App\Services\Ark;
 
-use ArkEcosystem\Crypto\Transactions\Builder\MultipaymentBuilder;
+use ArkEcosystem\Crypto\Transactions\Builder\MultiPaymentBuilder;
 use ArkEcosystem\Crypto\Transactions\Builder\TransferBuilder;
 
 class Signer
