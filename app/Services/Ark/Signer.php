@@ -23,8 +23,8 @@ class Signer
             ->amount($amount)
             ->vendorField($purpose)
             ->withNonce($nonce)
-            ->sign(decrypt(config('delegate.passphrase')));
-        //->secondSign(decrypt(config('delegate.secondPassphrase')));
+            ->sign(decrypt(config('delegate.passphrase')))
+            ->secondSign(decrypt(config('delegate.secondPassphrase')));
     }
 
     public function signMultipayment(array $wallets, int $nonce, string $purpose): MultipaymentBuilder
@@ -37,7 +37,8 @@ class Signer
             $multipayment->add(($wallet->payout_address ? $wallet->payout_address : $wallet->address), $wallet->earnings);
         }
 
-        return $multipayment->sign(decrypt(config('delegate.passphrase')));
-        //->secondSign(decrypt(config('delegate.secondPassphrase')));
+        return $multipayment
+            ->sign(decrypt(config('delegate.passphrase')))
+            ->secondSign(decrypt(config('delegate.secondPassphrase')));
     }
 }
