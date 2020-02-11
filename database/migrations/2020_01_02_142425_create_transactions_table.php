@@ -4,29 +4,31 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDisbursementsTable extends Migration
+class CreateTransactionsTable extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
     public function up()
     {
-        Schema::create('disbursements', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('wallet_id');
+        Schema::create('transactions', function (Blueprint $table) {
             $table->string('transaction_id');
-            $table->bigInteger('amount')->unsigned();
-            $table->string('purpose');
-            $table->datetime('signed_at');
+            $table->json('transaction');
             $table->timestamps();
+
+            $table->unique(['transaction_id']);
         });
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
     public function down()
     {
-        Schema::dropIfExists('disbursements');
+        Schema::dropIfExists('transactions');
     }
 }

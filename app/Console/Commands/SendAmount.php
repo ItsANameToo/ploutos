@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Services\Ark\Broadcaster;
+use App\Services\Ark\Client;
 use App\Services\Ark\Signer;
 use Illuminate\Console\Command;
 
@@ -21,12 +22,14 @@ class SendAmount extends Command
      * @param \App\Services\Ark\Signer      $broadcaster
      * @param \App\Services\Ark\Broadcaster $signer
      */
-    public function handle(Signer $signer, Broadcaster $broadcaster): void
+    public function handle(Signer $signer, Broadcaster $broadcaster, Client $client): void
     {
         $smartbridge = is_null($this->option('smartbridge')) ? '' : $this->option('smartbridge');
+        $nonce = $client->nonce() + 1;
         $transfer = $signer->sign(
             $this->argument('recipient'),
             $this->argument('amount') * ARKTOSHI,
+            $nonce,
             $smartbridge
         );
 

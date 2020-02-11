@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Models\Disbursement;
+use App\Models\Transaction;
 use App\Services\Ark\Broadcaster;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -10,23 +10,23 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class BroadcastDisbursement implements ShouldQueue
+class BroadcastTransaction implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * The disbursement instance.
+     * The transaction instance.
      *
-     * @var \App\Models\Disbursement
+     * @var \App\Models\Transaction
      */
-    public $disbursement;
+    public $transaction;
 
     /**
      * Create a new job instance.
      */
-    public function __construct(Disbursement $disbursement)
+    public function __construct(Transaction $transaction)
     {
-        $this->disbursement = $disbursement;
+        $this->transaction = $transaction;
     }
 
     /**
@@ -36,7 +36,7 @@ class BroadcastDisbursement implements ShouldQueue
      */
     public function handle(Broadcaster $broadcaster)
     {
-        $transaction = $this->disbursement->transaction;
+        $transaction = $this->transaction->transaction;
 
         config('delegate.broadcastType') === 'spread'
             ? $broadcaster->spread($transaction)

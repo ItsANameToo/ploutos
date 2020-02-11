@@ -2,8 +2,11 @@
 
 namespace App\Jobs\Voters;
 
+use App\Models\Transaction;
 use App\Models\Wallet;
+use App\Services\Ark\Broadcaster;
 use App\Services\Ark\Signer;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -16,18 +19,24 @@ class CreateDisbursement implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * The wallet instance.
+     * The wallet instances.
      *
      * @var \App\Models\Wallet
      */
-    public $wallet;
+    public $wallets;
+
+    /**
+     * The nonce for the transaction.
+     */
+    public $nonce;
 
     /**
      * Create a new job instance.
      */
-    public function __construct(Wallet $wallet)
+    public function __construct(array $wallets, int $nonce)
     {
-        $this->wallet = $wallet;
+        $this->wallets = $wallets;
+        $this->nonce = $nonce;
     }
 
     /**
@@ -35,28 +44,49 @@ class CreateDisbursement implements ShouldQueue
      *
      * @params \App\Services\Ark\Signer $signer
      */
-    public function handle(Signer $signer)
+    public function handle(Signer $signer, Broadcaster $broadcaster)
     {
-        $transfer = $signer->sign(
-            $this->wallet->payout_address ? $this->wallet->payout_address : $this->wallet->address,
-            $this->wallet->earnings,
-            config('delegate.vendorField')
-        );
+        if (count($this->wallets) > 1) {
+            $transfer = $signer->signMultipayment(
+                $this->wallets,
+                $this->nonce,
+                config('delegate.vendorField')
+            );
+        } else {
+            $wallet = $this->wallets[0];
+            $transfer = $signer->sign(
+                $wallet->payout_address ? $wallet->payout_address : $wallet->address,
+                $wallet->earnings,
+                $this->nonce,
+                config('delegate.vendorField')
+            );
+        }
 
         if (!$transfer->verify()) {
             throw new RuntimeException('Invalid transaction: '.json_encode($transfer));
         }
 
-        $transfer = transform_transfer($transfer->toArray());
+        $transfer = $transfer->toArray();
 
-        $this->wallet->disbursements()->create([
-            'transaction_id' => $transfer['id'],
-            'amount'         => $transfer['amount'],
-            'purpose'        => $transfer['vendorField'],
-            'signed_at'      => humanize_epoch($transfer['timestamp']),
-            'transaction'    => $transfer,
-        ]);
+        config('delegate.broadcastType') === 'spread'
+            ? $broadcaster->spread($transfer)
+            : $broadcaster->broadcast($transfer);
 
-        $this->wallet->update(['earnings' => 0]);
+        // TODO: make an expiration thingy so they aren't 0 by default
+
+        foreach ($this->wallets as $wallet) {
+            $disbursement = $wallet->disbursements()->create([
+                'transaction_id' => $transfer['id'],
+                'amount'         => $wallet->earnings,
+                'purpose'        => $transfer['vendorField'],
+                'signed_at'      => Carbon::now(),
+            ]);
+
+            Transaction::updateOrCreate(['transaction_id' => $transfer['id']], [
+                'transaction' => $transfer,
+            ]);
+
+            $wallet->update(['earnings' => 0]);
+        }
     }
 }

@@ -263,4 +263,16 @@ return [
 
     'broadcastType' => env('ARK_DELEGATE_BROADCAST_TYPE', 'default'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Multipayment count
+    |--------------------------------------------------------------------------
+    |
+    | Here you may specify the max amount of multipayments in a single transaction.
+    | By default it will be set to 150 (current maximum on ARK), but you can
+    | change this as needed.
+    |
+    */
+
+    'multipaymentCount' => env('ARK_DELEGATE_MULTIPAYMENT_COUNT', 150),
 ];

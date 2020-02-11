@@ -39,6 +39,16 @@ class Disbursement extends Model
     }
 
     /**
+     * A disbursement has a transactions.
+     *
+     * @return \App\Models\Transaction
+     */
+    public function transaction(): Transaction
+    {
+        return Transaction::findByTransactionId($this->transaction_id);
+    }
+
+    /**
      * Get a disbursement by the given transaction id.
      *
      * @return \App\Models\Disbursement
