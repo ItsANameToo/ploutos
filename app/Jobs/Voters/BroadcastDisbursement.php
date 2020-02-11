@@ -12,8 +12,10 @@ use Illuminate\Queue\SerializesModels;
 
 class BroadcastDisbursement implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
     /**
      * The wallet instance.
      *
