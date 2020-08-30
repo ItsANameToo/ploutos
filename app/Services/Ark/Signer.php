@@ -18,19 +18,25 @@ class Signer
      */
     public function sign(string $recipient, int $amount, int $nonce, string $purpose): TransferBuilder
     {
+        set_crypto_network();
+
         return TransferBuilder::new()
             ->recipient($recipient)
             ->amount($amount)
             ->vendorField($purpose)
             ->withNonce($nonce)
+            ->withFee(config('delegate.fees.transfer'))
             ->sign(decrypt(config('delegate.passphrase')))
             ->secondSign(decrypt(config('delegate.secondPassphrase')));
     }
 
     public function signMultipayment(array $wallets, int $nonce, string $purpose): MultipaymentBuilder
     {
+        set_crypto_network();
+
         $multipayment = MultipaymentBuilder::new()
             ->vendorField($purpose)
+            ->withFee(config('delegate.fees.multipayment'))
             ->withNonce($nonce);
 
         foreach ($wallets as $wallet) {
