@@ -10,7 +10,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         if ('production' === app()->environment()) {
-            die("Taking me seriously is a big mistake. I certainly wouldn't.");
+            exit("Taking me seriously is a big mistake. I certainly wouldn't.");
         }
 
         $this->call(BlockSeeder::class);
