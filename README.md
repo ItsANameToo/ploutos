@@ -59,6 +59,14 @@ An example to do this with `crontab -e` would be do add the following line to ca
 * * * * * cd ~/ploutos && php artisan schedule:run >> /dev/null 2>&1
 ```
 
+### Quick Setup Example
+
+To clear the database, poll voters and calculate earnings from block 180k and onwards, you could run for example this oneliner:
+
+```
+php artisan migrate:fresh && php artisan ark:poll:voters && php artisan ark:migrate:blocks 180000 --skip && php artisan ark:earnings
+```
+
 ### Compendia Notes
 
 A few thing to pay attention to when running this script on the Compendia Network:
@@ -103,8 +111,8 @@ You can configure the network to run the script on by specifying one of the foll
 
 - `mainnet`: the default value; this will configure the script for the ARK Mainnet
 - `devnet`: this will configure the script for the ARK Devnet
-- `mainnet_compendia`: this will configure the script for the Compendia (BIND) Mainnet
-- `devnet_compendia`: this will configure the script for the Compendia (BIND) Devnet
+- `compendia_mainnet`: this will configure the script for the Compendia (BIND) Mainnet
+- `compendia_devnet`: this will configure the script for the Compendia (BIND) Devnet
 
 ## Usage
 
