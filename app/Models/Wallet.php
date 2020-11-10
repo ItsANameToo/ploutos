@@ -69,7 +69,7 @@ class Wallet extends Model
      */
     public function scopePublic(Builder $query): Builder
     {
-        if(config('delegate.forceWhitelist')){
+        if (config('delegate.forceWhitelist')) {
             return $query->whitelisted();
         }
 
