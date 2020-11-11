@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "52bc2d49d8cc778ba1454599b104838c",
+    "content-hash": "a9a924dfe6d4f238f65b22d0b1bb7c6c",
     "packages": [
         {
             "name": "arkecosystem/crypto",
@@ -71,16 +71,16 @@
         },
         {
             "name": "arkx/ark-calculus",
-            "version": "0.3.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ItsANameToo/ark-calculus.git",
-                "reference": "d818a1ec14de5d3b8cfb10cea3e7edd394ebe00e"
+                "reference": "f4a787413cd6c8d08ba6b2ecf34acc887fd85fb5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ItsANameToo/ark-calculus/zipball/d818a1ec14de5d3b8cfb10cea3e7edd394ebe00e",
-                "reference": "d818a1ec14de5d3b8cfb10cea3e7edd394ebe00e",
+                "url": "https://api.github.com/repos/ItsANameToo/ark-calculus/zipball/f4a787413cd6c8d08ba6b2ecf34acc887fd85fb5",
+                "reference": "f4a787413cd6c8d08ba6b2ecf34acc887fd85fb5",
                 "shasum": ""
             },
             "require": {
@@ -88,10 +88,11 @@
                 "php": "^7.1"
             },
             "require-dev": {
-                "illuminate/support": "^5.6",
-                "phpunit/phpunit": "^7.0",
-                "symfony/var-dumper": "^4.1"
+                "illuminate/support": "^6.0.0",
+                "phpunit/phpunit": "^8.0.0",
+                "symfony/var-dumper": "^5.0.0"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -127,9 +128,9 @@
                 "currency"
             ],
             "support": {
-                "source": "https://github.com/ItsANameToo/ark-calculus/tree/0.3.0"
+                "source": "https://github.com/ItsANameToo/ark-calculus/tree/fix/share-calc"
             },
-            "time": "2019-03-26T07:03:15+00:00"
+            "time": "2020-11-11T17:56:51+00:00"
         },
         {
             "name": "bitwasp/bech32",
@@ -8974,7 +8975,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "arkecosystem/crypto": 20
+        "arkecosystem/crypto": 20,
+        "arkx/ark-calculus": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
