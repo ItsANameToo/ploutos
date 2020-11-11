@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6fa594e5ea2346f689d8598eeee591ca",
+    "content-hash": "52bc2d49d8cc778ba1454599b104838c",
     "packages": [
         {
             "name": "arkecosystem/crypto",
@@ -71,16 +71,16 @@
         },
         {
             "name": "arkx/ark-calculus",
-            "version": "0.2.0",
+            "version": "0.3.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/arkx-dev/ark-calculus.git",
-                "reference": "16667441abb8116dc184838d8696a346339a1aee"
+                "url": "https://github.com/ItsANameToo/ark-calculus.git",
+                "reference": "d818a1ec14de5d3b8cfb10cea3e7edd394ebe00e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/arkx-dev/ark-calculus/zipball/16667441abb8116dc184838d8696a346339a1aee",
-                "reference": "16667441abb8116dc184838d8696a346339a1aee",
+                "url": "https://api.github.com/repos/ItsANameToo/ark-calculus/zipball/d818a1ec14de5d3b8cfb10cea3e7edd394ebe00e",
+                "reference": "d818a1ec14de5d3b8cfb10cea3e7edd394ebe00e",
                 "shasum": ""
             },
             "require": {
@@ -103,7 +103,11 @@
                     "ArkX\\Calculus\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "ArkX\\Tests\\Calculus\\": "tests"
+                }
+            },
             "license": [
                 "MIT"
             ],
@@ -122,8 +126,10 @@
                 "crypto",
                 "currency"
             ],
-            "abandoned": true,
-            "time": "2018-11-25T10:07:25+00:00"
+            "support": {
+                "source": "https://github.com/ItsANameToo/ark-calculus/tree/0.3.0"
+            },
+            "time": "2019-03-26T07:03:15+00:00"
         },
         {
             "name": "bitwasp/bech32",
@@ -8976,5 +8982,5 @@
         "php": "^7.1.3"
     },
     "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.0.0"
 }
