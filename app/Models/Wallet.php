@@ -69,6 +69,10 @@ class Wallet extends Model
      */
     public function scopePublic(Builder $query): Builder
     {
+        if (config('delegate.forceWhitelist')) {
+            return $query->whitelisted();
+        }
+
         return $query->notBanned()->notBlacklisted();
     }
 
@@ -82,6 +86,18 @@ class Wallet extends Model
     public function scopeNotBlacklisted(Builder $query): Builder
     {
         return $query->whereNotIn('address', config('delegate.blacklist'));
+    }
+
+    /**
+     * Scope a query to only include whitelisted wallets.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeWhitelisted(Builder $query): Builder
+    {
+        return $query->whereIn('address', config('delegate.whitelist'));
     }
 
     /**
