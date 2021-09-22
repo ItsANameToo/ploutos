@@ -28,6 +28,7 @@ class Blocks extends Command
      */
     public function handle(): void
     {
+        set_crypto_network();
         $pages = $this->getPages();
 
         for ($i = 0; $i < $pages; $i++) {

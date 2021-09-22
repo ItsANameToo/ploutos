@@ -1,6 +1,10 @@
 <?php
 
 use App\Models\Block;
+use App\Models\Networks\CompendiaDevnet;
+use App\Models\Networks\CompendiaMainnet;
+use ArkEcosystem\Crypto\Configuration\Network;
+use ArkEcosystem\Crypto\Networks\Devnet;
 use Illuminate\Support\Carbon;
 
 /**
@@ -16,6 +20,27 @@ function format_arktoshi(int $value, int $decimals = 8)
     return number_format($value / ARKTOSHI, $decimals);
 }
 
+function set_crypto_network(): void
+{
+    $network = config('delegate.network');
+
+    if ($network === 'mainnet') {
+        return;
+    }
+
+    if ($network === 'devnet') {
+        Network::set(new Devnet());
+    }
+
+    if ($network === 'compendia_mainnet') {
+        Network::set(new CompendiaMainnet());
+    }
+
+    if ($network === 'compendia_devnet') {
+        Network::set(new CompendiaDevnet());
+    }
+}
+
 /**
  * Make an Ark epoch human readable.
  *
@@ -25,7 +50,7 @@ function format_arktoshi(int $value, int $decimals = 8)
  */
 function humanize_epoch(int $value)
 {
-    return Carbon::parse('2017-03-21T13:00:00.000Z')->addSeconds($value);
+    return Carbon::parse(Network::get()->epoch())->addSeconds($value);
 }
 
 /**

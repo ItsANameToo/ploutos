@@ -4,6 +4,17 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Network
+    |--------------------------------------------------------------------------
+    |
+    | Here you may specify which network the script should be configured for.
+    |
+    */
+
+    'network' => env('ARK_DELEGATE_NETWORK', 'mainnet'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Relay Host
     |--------------------------------------------------------------------------
     |
@@ -174,6 +185,26 @@ return [
 
         'share' => env('ARK_DELEGATE_FEE_SHARE', false),
 
+        /*
+        |-----------------------------------------------------------------------
+        | Multipayment Fee
+        |-----------------------------------------------------------------------
+        |
+        | Here you may specify the fee used for your multipayments.
+        |
+        */
+        'multipayment' => env('ARK_DELEGATE_FEE_MULTIPAYMENT', 10000000),
+
+        /*
+        |-----------------------------------------------------------------------
+        | Transfer Fee
+        |-----------------------------------------------------------------------
+        |
+        | Here you may specify the fee used for your transfers.
+        |
+        */
+        'transfer' => env('ARK_DELEGATE_FEE_TRANSFER', 10000000),
+
     ],
 
     /*
@@ -191,6 +222,17 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Force Whitelist
+    |--------------------------------------------------------------------------
+    |
+    | Whether to ONLY pay out whitelisted wallets (ignores voters and blacklist).
+    |
+    */
+
+    'forceWhitelist' => env('ARK_FORCE_WHITELIST', false),
+
+    /*
+    |--------------------------------------------------------------------------
     | Wallet Blacklist
     |--------------------------------------------------------------------------
     |
@@ -200,7 +242,7 @@ return [
     |
     */
 
-    'blacklist' => [],
+    'blacklist' => ['dKeubeKmrtGWGirU9hkA95s17Sga7zcsjC'],
 
     /*
     |--------------------------------------------------------------------------

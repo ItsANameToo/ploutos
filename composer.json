@@ -11,12 +11,16 @@
         {
             "type": "git",
             "url": "https://github.com/ArkEcosystem/php-crypto.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/ItsANameToo/ark-calculus"
         }
     ],
     "require": {
         "php": "^8.0",
         "arkecosystem/crypto": "^1.7.0",
-        "arkx/ark-calculus": "^0.2.0",
+        "arkx/ark-calculus": "dev-master",
         "doctrine/dbal": "^3.1",
         "fideloper/proxy": "^4.0",
         "graham-campbell/guzzle-factory": "^5.0",
@@ -31,7 +35,9 @@
         "spatie/laravel-schemaless-attributes": "^2.0"
     },
     "require-dev": {
+        "beyondcode/laravel-dump-server": "~1.0",
         "codedungeon/phpunit-result-printer": "^0.19.12",
+        "composer/composer": "^1.10",
         "filp/whoops": "^2.2",
         "fzaninotto/faker": "^1.8",
         "graham-campbell/analyzer": "^3.0",
@@ -39,8 +45,7 @@
         "mockery/mockery": "^1.1",
         "nunomaduro/collision": "^5.0",
         "phpunit/phpunit": "^9.0",
-        "themsaid/laravel-mail-preview": "^5.0",
-        "beyondcode/laravel-dump-server": "~1.0"
+        "themsaid/laravel-mail-preview": "^5.0"
     },
     "autoload": {
         "classmap": [
