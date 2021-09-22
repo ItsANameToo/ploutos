@@ -49,5 +49,7 @@ class ProcessBlock implements ShouldQueue
         calculate_delegate_share($this->block);
 
         $this->block->markAsProcessed();
+
+        return 0;
     }
 }
