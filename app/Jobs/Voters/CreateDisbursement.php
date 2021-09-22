@@ -90,5 +90,7 @@ class CreateDisbursement implements ShouldQueue
 
             $wallet->update(['earnings' => 0]);
         }
+
+        return 0;
     }
 }

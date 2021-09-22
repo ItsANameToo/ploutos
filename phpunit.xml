@@ -35,5 +35,6 @@
         <env name="QUEUE_DRIVER" value="sync"/>
         <env name="MAIL_DRIVER" value="array"/>
         <env name="AUTHY_SECRET" value="authy-secret"/>
+        <server name="TELESCOPE_ENABLED" value="false"/>
     </php>
 </phpunit>

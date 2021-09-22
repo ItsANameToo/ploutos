@@ -43,5 +43,7 @@ class BroadcastTransaction implements ShouldQueue
         config('delegate.broadcastType') === 'spread'
             ? $broadcaster->spread($transaction)
             : $broadcaster->broadcast($transaction);
+
+        return 0;
     }
 }
