@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use App\Models\Disbursement;
 use App\Models\Wallet;
 use Carbon\Carbon;
@@ -14,7 +16,7 @@ class DisbursementSeeder extends Seeder
     {
         Wallet::all()->each(function ($wallet) {
             for ($i = 0; $i < 20; $i++) {
-                $disbursement = factory(Disbursement::class)->make([
+                $disbursement = Disbursement::factory()->make([
                     'wallet_id'  => $wallet->id,
                     'signed_at'  => Carbon::now()->subDays($i),
                     'created_at' => Carbon::now()->addMinutes($i),

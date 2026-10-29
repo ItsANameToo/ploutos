@@ -6,7 +6,7 @@ use App\Models\Disbursement;
 use App\Services\Ark\Broadcaster;
 use App\Services\Ark\Client;
 use App\Services\Ark\Signer;
-use ArkX\Calculus\BigNumber;
+use App\Services\BigNumber;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Cache;
 

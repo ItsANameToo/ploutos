@@ -3,6 +3,7 @@
 namespace App\Services\Ark;
 
 use GrahamCampbell\GuzzleFactory\GuzzleFactory;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
 class Client
@@ -20,7 +21,7 @@ class Client
     public function __construct()
     {
         $this->client = GuzzleFactory::make([
-            'base_uri' => config('delegate.host'),
+            'base_uri' => delegate_host(),
         ]);
     }
 
@@ -89,21 +90,21 @@ class Client
         $peers = collect($peers)->sortByDesc('height')->sortBy('latency');
 
         return $peers->filter(function ($peer) {
-            return array_get($peer, 'latency', 1000) <= 300;
+            return Arr::get($peer, 'latency', 1000) <= 300;
         })->reject(function ($peer) {
-            return 200 !== array_get($peer, 'status', 500);
+            return Arr::has($peer, 'status') && 200 !== $peer['status'];
         });
     }
 
     /**
-     * [broadcast description].
+     * Broadcast the transaction to the API at the given base URL.
      *
      * @param string $uri
      * @param array  $transaction
      */
     public function broadcast(string $uri, array $transaction): array
     {
-        return $this->post('transactions', [
+        return $this->post(rtrim($uri, '/').'/transactions', [
             'transactions' => [$transaction],
         ]);
     }

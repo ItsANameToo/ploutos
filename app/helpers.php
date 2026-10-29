@@ -5,6 +5,7 @@ use App\Models\Networks\CompendiaDevnet;
 use App\Models\Networks\CompendiaMainnet;
 use ArkEcosystem\Crypto\Configuration\Network;
 use ArkEcosystem\Crypto\Networks\Devnet;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 
 /**
@@ -18,6 +19,23 @@ use Illuminate\Support\Carbon;
 function format_arktoshi(int $value, int $decimals = 8)
 {
     return number_format($value / ARKTOSHI, $decimals);
+}
+
+/**
+ * Get the configured delegate host as a base URL, e.g. "http://1.2.3.4:4003/api/"
+ * or "https://api.example.com/api/". Hosts without a scheme default to http.
+ *
+ * @return string
+ */
+function delegate_host(): string
+{
+    $host = trim((string) config('delegate.host'));
+
+    if (!preg_match('#^[a-z][a-z0-9+.-]*://#i', $host)) {
+        $host = 'http://'.$host;
+    }
+
+    return rtrim($host, '/').'/';
 }
 
 function set_crypto_network(): void
@@ -74,7 +92,7 @@ function object_to_array(object $value): array
  */
 function transform_transfer(array $value): array
 {
-    return array_only($value, [
+    return Arr::only($value, [
         'type', 'typeGroup', 'expiration', 'nonce', 'amount', 'fee',
         'recipientId', 'vendorField', 'senderPublicKey', 'signature',
         'signSignature', 'id', 'version', 'network',

@@ -18,7 +18,7 @@ The most notable features of this payout script are listed below:
 
 ## Requirements
 
-- PHP 7.3+
+- PHP 8.3+ (tested on PHP 8.5)
 - [Composer](https://getcomposer.org/download/)
 - [Laravel](https://laravel.com)
 
@@ -83,7 +83,7 @@ Note that all environment variables are prefixed with `ARK_DELEGATE_` but for th
 | Variable | Description | Example | Default |
 |----------|-------------|---------|---------|
 | NETWORK | The network you run the script on. See the supported networks section for more information. | `devnet` | `mainnet` |
-| HOST | The host used to fetch API data from | `"http:1.1.1.1:4003/api/"` | none |
+| HOST | The API URL of the node used to fetch data from and broadcast to. Can be an IP with port or a full URL (defaults to `http` if no scheme is given) | `"http://1.1.1.1:4003/api"` or `"https://api.example.com/api"` | none |
 | USERNAME | The username of your delegate | `ItsANameToo` | none |
 | ADDRESS | The address of your delegate | `DBk4cPY...NHxpMg8` | none |
 | PUBLIC_KEY | The public key of your delegate | `0236d5232...837231d5f0` | none |
@@ -102,7 +102,7 @@ Note that all environment variables are prefixed with `ARK_DELEGATE_` but for th
 | FEE_TRANSFER | The fee used for transfers made by the script | `25000000` | `10000000` (0.1) |
 | STAKING | Whether pending balances are taken into account when calculating payments | `false` | `false` |
 | DISTRIBUTE_BLACKLIST | Whether the pending balances of blacklisted wallets gets redistributed amongst active voters | `false` | `false` |
-| BROADCAST_TYPE | Whether you want to send your transactions so a single host ("default") or through random peers on the network ("spread") | `"spread"` | `"default"` |
+| BROADCAST_TYPE | Whether you want to send your transactions to your configured host only ("default") or to your host plus up to 5 well performing peers with a public API ("spread") | `"spread"` | `"default"` |
 | POLL_TRANSACTIONS | Whether you want to poll payment transactions and save these to the database (e.g. useful for historical data) | `false` | `false` |
 
 ## Supported Networks

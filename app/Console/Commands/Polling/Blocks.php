@@ -16,6 +16,13 @@ class Blocks extends Command
      */
     protected $signature = 'ark:poll:blocks {pages=1}';
 
+    /**
+     * The Ark client.
+     *
+     * @var \App\Services\Ark\Client
+     */
+    private $client;
+
     public function __construct(Client $client)
     {
         $this->client = $client;

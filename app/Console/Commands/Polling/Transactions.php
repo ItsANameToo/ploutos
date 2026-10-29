@@ -15,6 +15,13 @@ class Transactions extends Command
      */
     protected $signature = 'ark:poll:transactions {pages=5}';
 
+    /**
+     * The Ark client.
+     *
+     * @var \App\Services\Ark\Client
+     */
+    private $client;
+
     public function __construct(Client $client)
     {
         $this->client = $client;

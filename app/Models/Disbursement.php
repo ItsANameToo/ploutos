@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Disbursement extends Model
 {
+    use HasFactory;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -15,18 +18,14 @@ class Disbursement extends Model
     protected $fillable = ['transaction_id', 'amount', 'purpose', 'signed_at', 'transaction'];
 
     /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = ['signed_at'];
-
-    /**
      * The attributes that should be cast to native types.
      *
      * @var array
      */
-    protected $casts = ['transaction' => 'array'];
+    protected $casts = [
+        'signed_at'   => 'datetime',
+        'transaction' => 'array',
+    ];
 
     /**
      * A disbursement is owned by a wallet.

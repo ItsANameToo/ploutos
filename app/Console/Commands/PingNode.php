@@ -19,14 +19,15 @@ class PingNode extends Command
      */
     public function handle(): void
     {
-        $parsed = parse_url(config('delegate.host'));
+        $parsed = parse_url(delegate_host());
+        $port = $parsed['port'] ?? ('https' === strtolower($parsed['scheme']) ? 443 : 80);
 
-        if ($connection = fsockopen($parsed['host'], $parsed['port'], $errCode, $errStr, 1)) {
+        if ($connection = @fsockopen($parsed['host'], $port, $errCode, $errStr, 1)) {
+            fclose($connection);
+
             Artisan::call('up');
         } else {
             Artisan::call('down');
         }
-
-        fclose($connection);
     }
 }

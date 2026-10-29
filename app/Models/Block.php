@@ -3,11 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
 class Block extends Model
 {
+    use HasFactory;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -16,11 +19,14 @@ class Block extends Model
     protected $fillable = ['block_id', 'height', 'reward', 'fee', 'forged_at', 'processed_at'];
 
     /**
-     * The attributes that should be mutated to dates.
+     * The attributes that should be cast to native types.
      *
      * @var array
      */
-    protected $dates = ['forged_at', 'processed_at'];
+    protected $casts = [
+        'forged_at'    => 'datetime',
+        'processed_at' => 'datetime',
+    ];
 
     /**
      * Scope a query to only include processed blocks.

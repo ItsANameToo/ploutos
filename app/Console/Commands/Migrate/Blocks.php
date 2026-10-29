@@ -16,6 +16,13 @@ class Blocks extends Command
      */
     protected $signature = 'ark:migrate:blocks {height=0} {--skip}';
 
+    /**
+     * The Ark client.
+     *
+     * @var \App\Services\Ark\Client
+     */
+    private $client;
+
     public function __construct(Client $client)
     {
         $this->client = $client;

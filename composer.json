@@ -11,49 +11,34 @@
         {
             "type": "git",
             "url": "https://github.com/ArkEcosystem/php-crypto.git"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/ItsANameToo/ark-calculus"
         }
     ],
     "require": {
-        "php": "^8.0",
-        "arkecosystem/crypto": "^1.7.0",
-        "arkx/ark-calculus": "dev-master",
-        "doctrine/dbal": "^3.1",
-        "fideloper/proxy": "^4.0",
-        "graham-campbell/guzzle-factory": "^5.0",
-        "guzzlehttp/guzzle": "^7.0.1",
-        "laravel/framework": "^8.0",
-        "laravel/tinker": "^2.0",
-        "predis/predis": "^1.1",
-        "ramsey/uuid": "^4.2",
-        "sentry/sentry-laravel": "^2.8",
+        "php": "^8.3",
+        "arkecosystem/crypto": "^1.9",
+        "brick/math": "^1.0",
+        "graham-campbell/guzzle-factory": "^7.0|^8.0",
+        "guzzlehttp/guzzle": "^7.9",
+        "laravel/framework": "^13.0",
+        "laravel/tinker": "^3.0",
+        "predis/predis": "^3.0",
+        "ramsey/uuid": "^4.7",
+        "sentry/sentry-laravel": "^4.13",
         "shipping-docker/vessel": "^3.0",
-        "spatie/laravel-backup": "^7.6",
-        "spatie/laravel-schemaless-attributes": "^2.0"
+        "spatie/laravel-backup": "^10.0",
+        "spatie/laravel-schemaless-attributes": "^2.5"
     },
     "require-dev": {
-        "beyondcode/laravel-dump-server": "~1.0",
-        "codedungeon/phpunit-result-printer": "^0.19.12",
-        "composer/composer": "^1.10",
-        "filp/whoops": "^2.2",
-        "fzaninotto/faker": "^1.8",
-        "graham-campbell/analyzer": "^3.0",
-        "laravel/dusk": "^6.0",
-        "mockery/mockery": "^1.1",
-        "nunomaduro/collision": "^5.0",
-        "phpunit/phpunit": "^9.0",
-        "themsaid/laravel-mail-preview": "^5.0"
+        "fakerphp/faker": "^1.24",
+        "mockery/mockery": "^1.6",
+        "nunomaduro/collision": "^8.6",
+        "phpunit/phpunit": "^12.0|^13.0"
     },
     "autoload": {
-        "classmap": [
-            "database/seeds",
-            "database/factories"
-        ],
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
         },
         "files": [
             "app/helpers.php"
@@ -66,9 +51,7 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": [
-                "laravel/dusk"
-            ]
+            "dont-discover": []
         }
     },
     "scripts": {
@@ -80,7 +63,7 @@
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover"
+            "@php artisan package:discover --ansi"
         ],
         "seed": [
             "php artisan migrate:fresh --seed"
@@ -91,6 +74,6 @@
         "sort-packages": true,
         "optimize-autoloader": true
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true
 }
