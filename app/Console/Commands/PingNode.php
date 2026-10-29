@@ -21,12 +21,22 @@ class PingNode extends Command
     {
         $parsed = parse_url(config('delegate.host'));
 
-        if ($connection = fsockopen($parsed['host'], $parsed['port'], $errCode, $errStr, 1)) {
+        $host = $parsed['host'] ?? null;
+        $port = $parsed['port'] ?? $this->defaultPort($parsed['scheme'] ?? 'http');
+
+        $connection = $host ? @fsockopen($host, $port, $errCode, $errStr, 1) : false;
+
+        if ($connection) {
+            fclose($connection);
+
             Artisan::call('up');
         } else {
             Artisan::call('down');
         }
+    }
 
-        fclose($connection);
+    private function defaultPort(string $scheme): int
+    {
+        return strtolower($scheme) === 'https' ? 443 : 80;
     }
 }

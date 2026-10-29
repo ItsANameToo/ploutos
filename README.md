@@ -83,7 +83,7 @@ Note that all environment variables are prefixed with `ARK_DELEGATE_` but for th
 | Variable | Description | Example | Default |
 |----------|-------------|---------|---------|
 | NETWORK | The network you run the script on. See the supported networks section for more information. | `devnet` | `mainnet` |
-| HOST | The host used to fetch API data from | `"http:1.1.1.1:4003/api/"` | none |
+| HOST | The host used to fetch API data from, either an IP with port or a URL | `"http://1.1.1.1:4003/api/"` or `"https://api.example.com/api/"` | none |
 | USERNAME | The username of your delegate | `ItsANameToo` | none |
 | ADDRESS | The address of your delegate | `DBk4cPY...NHxpMg8` | none |
 | PUBLIC_KEY | The public key of your delegate | `0236d5232...837231d5f0` | none |
