@@ -66,17 +66,17 @@ class Kernel extends ConsoleKernel
             ->dailyAt('18:30')
             ->withoutOverlapping();
 
-        $schedule
-            ->command('backup:clean')
-            ->daily();
+        // $schedule
+        //     ->command('backup:clean')
+        //     ->daily();
 
-        $schedule
-            ->command('backup:run')
-            ->daily();
+        // $schedule
+        //     ->command('backup:run')
+        //     ->daily();
 
-        $schedule
-            ->command('backup:monitor')
-            ->daily();
+        // $schedule
+        //     ->command('backup:monitor')
+        //     ->daily();
     }
 
     /**
