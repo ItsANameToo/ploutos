@@ -11,7 +11,7 @@ return [
     |
     */
 
-    'network' => env('ARK_DELEGATE_NETWORK', 'mainnet'),
+    'network' => env_or_default('ARK_DELEGATE_NETWORK', 'mainnet'),
 
     /*
     |--------------------------------------------------------------------------
@@ -72,7 +72,7 @@ return [
     |
     */
 
-    'vendorField' => env('ARK_DELEGATE_VENDOR_FIELD'),
+    'vendorField' => env_or_default('ARK_DELEGATE_VENDOR_FIELD', ''),
 
     /*
     |--------------------------------------------------------------------------
@@ -84,7 +84,7 @@ return [
     |
     */
 
-    'sharePercentage' => env('ARK_DELEGATE_SHARE_PERCENTAGE', 90),
+    'sharePercentage' => env_or_default('ARK_DELEGATE_SHARE_PERCENTAGE', 90),
 
     /*
     |--------------------------------------------------------------------------
@@ -97,7 +97,7 @@ return [
     |
     */
 
-    'threshold' => env('ARK_DELEGATE_THRESHOLD', 0.1),
+    'threshold' => env_or_default('ARK_DELEGATE_THRESHOLD', 0.1),
 
     /*
     |--------------------------------------------------------------------------
@@ -134,7 +134,7 @@ return [
     |
     */
 
-    'staking' => env('ARK_DELEGATE_STAKING', false),
+    'staking' => env_or_default('ARK_DELEGATE_STAKING', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -158,7 +158,7 @@ return [
         |
         */
 
-        'cover' => env('ARK_DELEGATE_FEE_COVER', false),
+        'cover' => env_or_default('ARK_DELEGATE_FEE_COVER', false),
 
         /*
         |-----------------------------------------------------------------------
@@ -171,7 +171,7 @@ return [
         |
         */
 
-        'deduct' => env('ARK_DELEGATE_FEE_DEDUCT', false),
+        'deduct' => env_or_default('ARK_DELEGATE_FEE_DEDUCT', false),
 
         /*
         |-----------------------------------------------------------------------
@@ -183,7 +183,7 @@ return [
         |
         */
 
-        'share' => env('ARK_DELEGATE_FEE_SHARE', false),
+        'share' => env_or_default('ARK_DELEGATE_FEE_SHARE', false),
 
         /*
         |-----------------------------------------------------------------------
@@ -193,7 +193,7 @@ return [
         | Here you may specify the fee used for your multipayments.
         |
         */
-        'multipayment' => env('ARK_DELEGATE_FEE_MULTIPAYMENT', 10000000),
+        'multipayment' => env_or_default('ARK_DELEGATE_FEE_MULTIPAYMENT', 10000000),
 
         /*
         |-----------------------------------------------------------------------
@@ -203,7 +203,7 @@ return [
         | Here you may specify the fee used for your transfers.
         |
         */
-        'transfer' => env('ARK_DELEGATE_FEE_TRANSFER', 10000000),
+        'transfer' => env_or_default('ARK_DELEGATE_FEE_TRANSFER', 10000000),
 
     ],
 
@@ -229,7 +229,7 @@ return [
     |
     */
 
-    'forceWhitelist' => env('ARK_FORCE_WHITELIST', false),
+    'forceWhitelist' => env_or_default('ARK_FORCE_WHITELIST', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -256,8 +256,8 @@ return [
 
     'personal' => [
         'address'         => env('ARK_DELEGATE_PERSONAL_ADDRESS'),
-        'vendorField'     => env('ARK_DELEGATE_PERSONAL_VENDOR_FIELD'),
-        'sharePercentage' => env('ARK_DELEGATE_PERSONAL_SHARE_PERCENTAGE'),
+        'vendorField'     => env_or_default('ARK_DELEGATE_PERSONAL_VENDOR_FIELD', ''),
+        'sharePercentage' => env_or_default('ARK_DELEGATE_PERSONAL_SHARE_PERCENTAGE', 0),
     ],
 
     /*
@@ -272,7 +272,7 @@ return [
     */
 
     'polling' => [
-        'transactions' => env('ARK_DELEGATE_POLL_TRANSACTIONS', false),
+        'transactions' => env_or_default('ARK_DELEGATE_POLL_TRANSACTIONS', false),
     ],
 
     /*
@@ -288,7 +288,7 @@ return [
     */
 
     'distribute' => [
-        'blacklist' => env('ARK_DELEGATE_DISTRIBUTE_BLACKLIST', false),
+        'blacklist' => env_or_default('ARK_DELEGATE_DISTRIBUTE_BLACKLIST', false),
     ],
 
     /*
@@ -303,7 +303,7 @@ return [
     |
     */
 
-    'broadcastType' => env('ARK_DELEGATE_BROADCAST_TYPE', 'default'),
+    'broadcastType' => env_or_default('ARK_DELEGATE_BROADCAST_TYPE', 'default'),
 
     /*
     |--------------------------------------------------------------------------
@@ -316,5 +316,5 @@ return [
     |
     */
 
-    'multipaymentCount' => env('ARK_DELEGATE_MULTIPAYMENT_COUNT', 150),
+    'multipaymentCount' => env_or_default('ARK_DELEGATE_MULTIPAYMENT_COUNT', 150),
 ];

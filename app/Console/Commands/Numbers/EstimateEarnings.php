@@ -43,12 +43,12 @@ class EstimateEarnings extends Command
             ];
         })->sortByDesc('balance');
 
-        if (env('ARK_DELEGATE_PERSONAL_ADDRESS')) {
-            $sharePercentage = env('ARK_DELEGATE_PERSONAL_SHARE_PERCENTAGE');
+        if (config('delegate.personal.address')) {
+            $sharePercentage = config('delegate.personal.sharePercentage');
 
             $wallets->push([
                 'role'     => 'Delegate',
-                'address'  => env('ARK_DELEGATE_PERSONAL_ADDRESS'),
+                'address'  => config('delegate.personal.address'),
                 'balance'  => 0,
                 'earnings' => 422 * ($sharePercentage / 100),
             ]);

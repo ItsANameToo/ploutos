@@ -22,6 +22,22 @@ function format_arktoshi(int $value, int $decimals = 8)
 }
 
 /**
+ * Get an environment value, falling back to the default when the variable
+ * is missing or set to an empty value (e.g. "ARK_DELEGATE_FEE_TRANSFER=").
+ *
+ * @param string $key
+ * @param mixed  $default
+ *
+ * @return mixed
+ */
+function env_or_default(string $key, $default = null)
+{
+    $value = env($key);
+
+    return null === $value || '' === $value ? $default : $value;
+}
+
+/**
  * Get the configured delegate host as a base URL, e.g. "http://1.2.3.4:4003/api/"
  * or "https://api.example.com/api/". Hosts without a scheme default to http.
  *
@@ -106,7 +122,7 @@ function transform_transfer(array $value): array
  */
 function calculate_delegate_share(Block $block): void
 {
-    $delegatePercentage = env('ARK_DELEGATE_PERSONAL_SHARE_PERCENTAGE');
+    $delegatePercentage = config('delegate.personal.sharePercentage');
 
     if ($delegatePercentage > 0) {
         $delegatePercentage /= 100;
